@@ -5,23 +5,28 @@ require __DIR__ . '/vendor/autoload.php';
 
 use LinkORB\Component\Etcd\Client;
 
+$cache_path = '/tmp/confcache';
+
 function cache_set($key, $val) {
+    global $cache_path;
     echo "set key: $key";
     $val = var_export($val, true);
     // HHVM fails at __set_state, so just use object cast for now
     $val = str_replace('stdClass::__set_state', '(object)', $val);
     // Write to temp file first to ensure atomicity
-    $tmp = "/tmp/confcache$key." . uniqid('', true) . '.tmp';
+    $tmp = $cache_path.$key."." . uniqid('', true) . '.tmp';
     file_put_contents($tmp, '<?php $val = ' . $val . ';', LOCK_EX);
-    rename($tmp, "/tmp/confcache$key");
+    rename($tmp, "$cache_pathe$key");
 }
 
 function get_key($key) {
+    global $cache_path;
+    
     if(!substr($key, 0, 1) === "/") {
         throw new Exception('key must start with /');
     }
 
-    @include "/tmp/confcache$key";
+    @include "$cache_path$key";
 
     if(isset($val)) {
         return $val;
