@@ -2,7 +2,7 @@
     "name": "yoozoo/webdemo",
     "type": "project",
     "require": {
-        "linkorb/etcd-php": "^1.3"
+        "youzusg/etcd-php": "^1.4"
     },
     "authors": [
         {
