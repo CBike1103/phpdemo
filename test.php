@@ -32,7 +32,7 @@ function get_key($key) {
         return $val;
     }
 
-    $client = new Client('http://127.0.0.1:2379','username','password');
+    $client = new Client('http://127.0.0.1:2379', 'username', 'password');
     $val = $client->get($key);
     cache_set($key, $val);
 
@@ -40,7 +40,7 @@ function get_key($key) {
 }
 
 
-$client = new Client('http://127.0.0.1:2379','username','password');
+$client = new Client('http://127.0.0.1:2379', 'username', 'password');
 // $client->set('/foo', 'fooValue');
 // Set the ttl
 // $client->set('/foo', 'fooValue', 10);
